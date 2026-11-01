@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>La carte · ’t Kanneke, estaminet du Vieux-Lille</title>
+  <meta name="description" content="La carte de ’t Kanneke : carbonade flamande, potjevleesch, welsh, moules à la bière, tarte au sucre et bières du Nord. Allergènes indiqués pour chaque plat.">
+  <!-- Démo : commerce fictif, à ne pas indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121514">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/grenze-gotisch.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/vollkorn.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="app.js" defer></script>
+</head>
+<body class="page-carte">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="cruche" viewBox="0 0 32 32"><path fill="currentColor" d="M10.6 2.6h10.8v2.6h-.9v2.1c3.4 1.7 5.8 5.2 5.8 9.3 0 3.6-1.5 7-3.9 9.4l.6 2.1H8.9l.6-2.1C7.2 23.6 5.7 20.2 5.7 16.6c0-4.1 2.4-7.6 5.8-9.3V5.2h-.9V2.6Zm2.1 2.6v2.8l-.6.3c-3.1 1.4-5.1 4.6-5.1 8.3 0 1.1.2 2.2.5 3.2h16.9c.3-1 .5-2.1.5-3.2 0-3.7-2-6.9-5.1-8.3l-.6-.3V5.2h-6.5Z"/><path fill="currentColor" d="M8 21.9h16v1.6H8zM5.9 2.2l4.7.4v2.6Z"/><path d="M22.3 8.4c3.6-.9 6.4 1 6.3 4.3-.1 2.6-1.9 4.5-4.6 5.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><path d="M3 7.5h4l1.6-2.5h6.8L17 7.5h4V19H3z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="12.8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.9"/></symbol>
+    <symbol id="i-feuille" viewBox="0 0 24 24"><path d="M5 19C4 11 9 5 20 4c0 10-5 15-13 14" fill="currentColor"/><path d="M4 21c3-5 7-9 12-12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-cone" viewBox="0 0 24 32"><path d="M12 1.5v4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 6c-5 0-8 4-8 9.2 0 6.6 3.8 12.4 8 14.8 4.2-2.4 8-8.2 8-14.8C20 10 17 6 12 6Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4.4 12.4c2.4 1.9 4.9 2.6 7.6 2.6s5.2-.7 7.6-2.6M4.6 18.6c2.4 1.9 4.8 2.7 7.4 2.7s5-.8 7.4-2.7M6.6 24.6c1.8 1.4 3.6 2 5.4 2s3.6-.6 5.4-2M12 6v24" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-filtre" viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></symbol>
+  </svg>
+
+  <p class="bandeau-demo">Démo · commerce fictif, réalisé par <a href="https://moreaudigital.fr/">Moreau Digital</a> · formule Standard</p>
+
+  <header class="entete">
+    <a class="enseigne" href="index.html">
+      <svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>
+      <span class="enseigne__nom">’t Kanneke</span>
+      <span class="enseigne__sous">Estaminet · Vieux-Lille</span>
+    </a>
+    <nav class="nav" aria-label="Pages du site">
+      <a href="index.html">L’ardoise</a>
+      <a href="carte.html" aria-current="page">La carte</a>
+      <a href="photos.html">Photos</a>
+      <a href="venir.html">Venir<span class="nav__plus"> &amp; groupes</span></a>
+    </nav>
+    <a class="entete__tel" href="tel:+33353016824"><svg class="icone" aria-hidden="true"><use href="#i-tel"/></svg><span class="entete__tel-mot">Réserver</span><span class="entete__tel-num">03 53 01 68 24</span></a>
+  </header>
+
+  <main id="contenu" class="carte papier">
+    <img class="carte__frise" src="gravures/jambons-800.webp" srcset="gravures/jambons-800.webp 800w, gravures/jambons-1400.webp 1400w" sizes="100vw" width="800" height="131" alt="" aria-hidden="true">
+
+    <div class="carte__tete">
+      <h1 class="carte__titre">La carte</h1>
+      <p class="carte__chapo">Cuisine du Nord, faite ici du matin au soir. La carte change avec les saisons, l’ardoise tous les jours.</p>
+      <p class="carte__maison"><svg aria-hidden="true"><use href="#cruche"/></svg>Tout est fait maison, frites comprises.</p>
+    </div>
+
+    <!-- Filtrer selon ses allergies : les plats concernés passent en gris -->
+    <div class="filtres" data-filtres>
+      <button class="filtres__ouvrir" type="button" data-filtres-ouvrir aria-expanded="false" aria-controls="filtres-panneau"><svg class="icone" aria-hidden="true"><use href="#i-filtre"/></svg>Allergies, végétarien&nbsp;? Trier la carte<span data-compte></span></button>
+      <div class="filtres__panneau" id="filtres-panneau" hidden>
+        <p class="filtres__aide">Touchez ce que vous ne mangez pas&nbsp;: les plats qui en contiennent passent en gris.</p>
+        <div class="filtres__puces" role="group" aria-label="Je ne mange pas">
+          <button class="puce puce--vege" type="button" data-vege aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="#i-feuille"/></svg>Végétarien</button>
+          <button class="puce" type="button" data-allergene="gluten" aria-pressed="false">Gluten</button>
+          <button class="puce" type="button" data-allergene="lait" aria-pressed="false">Lait</button>
+          <button class="puce" type="button" data-allergene="oeufs" aria-pressed="false">Œufs</button>
+          <button class="puce" type="button" data-allergene="poisson" aria-pressed="false">Poisson</button>
+          <button class="puce" type="button" data-allergene="crustaces" aria-pressed="false">Crustacés</button>
+          <button class="puce" type="button" data-allergene="mollusques" aria-pressed="false">Mollusques</button>
+          <button class="puce" type="button" data-allergene="fruits-a-coque" aria-pressed="false">Fruits à coque</button>
+          <button class="puce" type="button" data-allergene="celeri" aria-pressed="false">Céleri</button>
+          <button class="puce" type="button" data-allergene="moutarde" aria-pressed="false">Moutarde</button>
+          <button class="puce" type="button" data-allergene="sulfites" aria-pressed="false">Sulfites</button>
+        </div>
+        <p class="filtres__bilan" data-bilan aria-live="polite"></p>
+        <button class="filtres__vider" type="button" data-filtres-vider hidden>Tout effacer</button>
+        <p class="filtres__note">Liste indicative&nbsp;: signalez toujours une allergie en commandant.</p>
+      </div>
+    </div>
+
+    <div class="carte__pages">
+      <div class="carte__page">
+        <section class="rubrique" aria-labelledby="r-commencer">
+          <h2 class="rubrique__titre" id="r-commencer">Pour commencer</h2>
+          <ul class="plats">
+            <li class="plat" data-allergenes="gluten lait moutarde sulfites">
+              <div class="plat__ligne"><h3 class="plat__nom">Planche flamande à partager</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">14&nbsp;€</span></div>
+              <p class="plat__desc">Maroilles, vieux-lille, saucisson à la bière, pâté de campagne, pickles et pain de campagne.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, moutarde, sulfites</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-planche" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-planche"><img src="photos/planche-480.webp" srcset="photos/planche-480.webp 480w, photos/planche-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="719" loading="lazy" alt="Planche de charcuterie et de fromages, cornichons et pickles, sur une ardoise."></figure>
+            </li>
+            <li class="plat" data-allergenes="crustaces gluten lait oeufs">
+              <div class="plat__ligne"><h3 class="plat__nom">Croquettes de crevettes grises</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">12&nbsp;€</span></div>
+              <p class="plat__desc">Deux croquettes, crevettes de la mer du Nord, persil frit et citron.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: crustacés, gluten, lait, œufs</p>
+            </li>
+            <li class="plat" data-allergenes="poisson moutarde">
+              <div class="plat__ligne"><h3 class="plat__nom">Harengs pommes à l’huile</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">8,50&nbsp;€</span></div>
+              <p class="plat__desc">Harengs fumés de Boulogne, pommes de terre tièdes, oignons rouges.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: poisson, moutarde</p>
+            </li>
+            <li class="plat" data-allergenes="gluten lait oeufs" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Tarte au maroilles<svg class="plat__vege" role="img" aria-label="végétarien"><use href="#i-feuille"/></svg></h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">9,50&nbsp;€</span></div>
+              <p class="plat__desc">Une part bien chaude, salade de saison.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, œufs</p>
+            </li>
+            <li class="plat" data-allergenes="celeri lait" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Soupe du jour<svg class="plat__vege" role="img" aria-label="végétarien"><use href="#i-feuille"/></svg></h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">7&nbsp;€</span></div>
+              <p class="plat__desc">Selon le marché de Wazemmes&nbsp;: elle est écrite sur l’ardoise.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: céleri, lait</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="rubrique" aria-labelledby="r-plats">
+          <h2 class="rubrique__titre" id="r-plats">Les plats du Nord</h2>
+          <p class="rubrique__note">Servis avec des frites maison ou une salade. Les frites cuisent à la graisse de bœuf&nbsp;: pour un plat végétarien, demandez des pommes grenaille.</p>
+          <ul class="plats">
+            <li class="plat" data-allergenes="gluten moutarde celeri">
+              <div class="plat__ligne"><h3 class="plat__nom">Carbonade flamande</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">18,50&nbsp;€</span></div>
+              <p class="plat__desc">Joue de bœuf mijotée quatre heures à la bière brune, pain d’épices et moutarde.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, moutarde, céleri</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-carbonade" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-carbonade"><img src="photos/carbonade-480.webp" srcset="photos/carbonade-480.webp 480w, photos/carbonade-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="319" loading="lazy" alt="Carbonade de bœuf luisante de sauce dans un plat en fonte noir."></figure>
+            </li>
+            <li class="plat" data-allergenes="celeri sulfites">
+              <div class="plat__ligne"><h3 class="plat__nom">Potjevleesch maison</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">17,50&nbsp;€</span></div>
+              <p class="plat__desc">Quatre viandes blanches en gelée, préparé la veille. Cornichons, frites et mayonnaise.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: céleri, sulfites</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-potjevleesch" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-potjevleesch"><img src="photos/potjevleesch-480.webp" srcset="photos/potjevleesch-480.webp 480w, photos/potjevleesch-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="473" loading="lazy" alt="Assiette de potjevleesch avec frites, salade, cornichon et mayonnaise."></figure>
+            </li>
+            <li class="plat" data-allergenes="gluten lait oeufs moutarde">
+              <div class="plat__ligne"><h3 class="plat__nom">Welsh à la bière blonde</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">16,50&nbsp;€</span></div>
+              <p class="plat__desc">Cheddar fondu à la bière sur pain de campagne, jambon, moutarde, œuf au plat.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, œufs, moutarde</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-welsh" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-welsh"><img src="photos/welsh-480.webp" width="480" height="564" loading="lazy" alt="Welsh gratiné et doré dans une petite cocotte en fonte."></figure>
+            </li>
+            <li class="plat" data-allergenes="gluten lait oeufs moutarde" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Welsh aux champignons<svg class="plat__vege" role="img" aria-label="végétarien"><use href="#i-feuille"/></svg></h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">15,50&nbsp;€</span></div>
+              <p class="plat__desc">Le même, sans jambon, avec des champignons poêlés.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, œufs, moutarde</p>
+            </li>
+            <li class="plat" data-allergenes="gluten lait celeri">
+              <div class="plat__ligne"><h3 class="plat__nom">Coq à la bière</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">18&nbsp;€</span></div>
+              <p class="plat__desc">Coq fermier, bière ambrée, champignons, lardons et crème.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, céleri</p>
+            </li>
+            <li class="plat" data-allergenes="gluten lait">
+              <div class="plat__ligne"><h3 class="plat__nom">Chicons au gratin</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">16&nbsp;€</span></div>
+              <p class="plat__desc">Endives braisées roulées dans le jambon, béchamel au maroilles.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait</p>
+            </li>
+            <li class="plat" data-allergenes="mollusques gluten lait celeri">
+              <div class="plat__ligne"><h3 class="plat__nom">Moules à la bière blanche</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">18,50&nbsp;€</span></div>
+              <p class="plat__desc">De septembre à mars. Moules de bouchot, crème, céleri, frites maison.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: mollusques, gluten, lait, céleri</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-moules" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-moules"><img src="photos/moules-frites-480.webp" srcset="photos/moules-frites-480.webp 480w, photos/moules-frites-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="320" loading="lazy" alt="Bol de moules et de frites sur une table en bois."></figure>
+            </li>
+            <li class="plat" data-allergenes="lait" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Assiette du potager<svg class="plat__vege" role="img" aria-label="végétarien"><use href="#i-feuille"/></svg></h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">15&nbsp;€</span></div>
+              <p class="plat__desc">Légumes d’hiver rôtis, purée au maroilles, pommes grenaille.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: lait</p>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="carte__page">
+        <section class="rubrique rubrique--ptits" aria-labelledby="r-ptits">
+          <h2 class="rubrique__titre" id="r-ptits">Pour les p’tits</h2>
+          <img class="rubrique__gravure" src="gravures/enfants-600.webp" width="600" height="496" loading="lazy" alt="Gravure : deux enfants lèchent le fond d’un plat, à quatre pattes.">
+          <ul class="plats">
+            <li class="plat" data-allergenes="gluten lait">
+              <div class="plat__ligne"><h3 class="plat__nom">Menu des p’tits, jusqu’à 10&nbsp;ans</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">10&nbsp;€</span></div>
+              <p class="plat__desc">Blanc de poulet ou fricadelle maison, frites, une boule de glace et un sirop. Les assiettes reviennent propres, comme sur la gravure.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="rubrique" aria-labelledby="r-desserts">
+          <h2 class="rubrique__titre" id="r-desserts">Les desserts</h2>
+          <ul class="plats">
+            <li class="plat" data-allergenes="gluten lait oeufs" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Tarte au sucre</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">7&nbsp;€</span></div>
+              <p class="plat__desc">À la vergeoise brune, avec une boule de glace vanille.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, œufs</p>
+            </li>
+            <li class="plat" data-allergenes="lait oeufs" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Crème brûlée à la chicorée</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">7,50&nbsp;€</span></div>
+              <p class="plat__desc">Caramélisée minute.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: lait, œufs</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-creme" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-creme"><img src="photos/creme-brulee-480.webp" srcset="photos/creme-brulee-480.webp 480w, photos/creme-brulee-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="400" loading="lazy" alt="Crème brûlée dans un ramequin, sur une serviette bleue."></figure>
+            </li>
+            <li class="plat" data-allergenes="gluten lait oeufs" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Gaufre fourrée</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">6&nbsp;€</span></div>
+              <p class="plat__desc">Fine et fourrée à la vergeoise, comme à Lille.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: gluten, lait, œufs</p>
+              <button class="plat__voir" type="button" data-voir-photo aria-expanded="false" aria-controls="photo-gaufre" hidden><svg class="icone" aria-hidden="true"><use href="#i-photo"/></svg><span data-libelle>Voir le plat</span></button>
+              <figure class="plat__photo" id="photo-gaufre"><img src="photos/gaufres-480.webp" srcset="photos/gaufres-480.webp 480w, photos/gaufres-900.webp 900w" sizes="(min-width: 1000px) 380px, 86vw" width="480" height="214" loading="lazy" alt="Deux gaufres fines fourrées à la vergeoise, posées l’une sur l’autre."></figure>
+            </li>
+            <li class="plat" data-allergenes="lait" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Dame blanche</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">7&nbsp;€</span></div>
+              <p class="plat__desc">Glace vanille, chocolat chaud, chantilly.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: lait</p>
+            </li>
+            <li class="plat" data-allergenes="lait oeufs" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Café liégeois</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">7&nbsp;€</span></div>
+              <p class="plat__desc">Glace café, café serré, chantilly.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: lait, œufs</p>
+            </li>
+            <li class="plat" data-allergenes="lait gluten fruits-a-coque" data-vege="oui">
+              <div class="plat__ligne"><h3 class="plat__nom">Fromages du Nord</h3><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">8,50&nbsp;€</span></div>
+              <p class="plat__desc">Maroilles, vieux-lille, mimolette vieille et pain aux noix.</p>
+              <p class="plat__allergenes">Allergènes&nbsp;: lait, gluten, fruits à coque</p>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- À boire : les bières sur leurs sous-bocks -->
+    <section class="boire" aria-labelledby="r-boire">
+      <div class="boire__tete">
+        <h2 class="rubrique__titre" id="r-boire">À boire</h2>
+        <p class="rubrique__note">Quatre bières à la pression, d’autres en bouteille, et une bière du moment qui change chaque mois. Toutes contiennent du gluten, sauf la blonde sans gluten.</p>
+      </div>
+      <ul class="bieres">
+        <li class="biere biere--blonde"><svg class="biere__logo" aria-hidden="true"><use href="#cruche"/></svg><h3 class="biere__nom">Blonde de la maison</h3><p class="biere__style">Blonde de garde, 6,5&nbsp;%</p><p class="biere__prix">25&nbsp;cl&nbsp;3,80&nbsp;€ · 50&nbsp;cl&nbsp;6,90&nbsp;€</p></li>
+        <li class="biere biere--ambree"><svg class="biere__logo biere__logo--cone" aria-hidden="true"><use href="#i-cone"/></svg><h3 class="biere__nom">Ambrée de Flandre</h3><p class="biere__style">Ronde et maltée, 7&nbsp;%</p><p class="biere__prix">25&nbsp;cl&nbsp;4,20&nbsp;€ · 50&nbsp;cl&nbsp;7,60&nbsp;€</p></li>
+        <li class="biere biere--blanche"><svg class="biere__logo biere__logo--cone" aria-hidden="true"><use href="#i-cone"/></svg><h3 class="biere__nom">Blanche</h3><p class="biere__style">Coriandre et orange, 5&nbsp;%</p><p class="biere__prix">25&nbsp;cl&nbsp;3,90&nbsp;€ · 50&nbsp;cl&nbsp;7,20&nbsp;€</p></li>
+        <li class="biere biere--noel"><svg class="biere__logo biere__logo--cone" aria-hidden="true"><use href="#i-cone"/></svg><h3 class="biere__nom">Bière de Noël</h3><p class="biere__style">La bière du moment, épicée, 7,5&nbsp;%</p><p class="biere__prix">25&nbsp;cl&nbsp;4,50&nbsp;€ · 50&nbsp;cl&nbsp;8&nbsp;€</p></li>
+      </ul>
+      <div class="boissons">
+        <figure class="boissons__photo">
+          <img src="photos/biere-tirage-480.webp" srcset="photos/biere-tirage-480.webp 480w, photos/biere-tirage-900.webp 900w" sizes="(min-width: 1000px) 340px, 86vw" width="480" height="691" loading="lazy" alt="Une bière blonde tirée à la pompe dans un verre tenu à la main.">
+        </figure>
+        <div class="boissons__listes">
+          <h3 class="boissons__titre">En bouteille</h3>
+          <ul class="liste-prix">
+            <li><span>Triple d’abbaye, 33&nbsp;cl</span><span class="plat__points" aria-hidden="true"></span><span>5,50&nbsp;€</span></li>
+            <li><span>Bière de garde à partager, 75&nbsp;cl</span><span class="plat__points" aria-hidden="true"></span><span>15&nbsp;€</span></li>
+            <li><span>Blonde sans gluten, 33&nbsp;cl</span><span class="plat__points" aria-hidden="true"></span><span>5&nbsp;€</span></li>
+            <li><span>Bière sans alcool, 33&nbsp;cl</span><span class="plat__points" aria-hidden="true"></span><span>4,50&nbsp;€</span></li>
+          </ul>
+          <h3 class="boissons__titre">Et aussi</h3>
+          <ul class="liste-prix">
+            <li><span>Verre de côtes-du-rhône</span><span class="plat__points" aria-hidden="true"></span><span>5&nbsp;€</span></li>
+            <li><span>Genièvre, 4&nbsp;cl</span><span class="plat__points" aria-hidden="true"></span><span>4&nbsp;€</span></li>
+            <li><span>Limonade artisanale, jus de pomme de la région</span><span class="plat__points" aria-hidden="true"></span><span>3,50&nbsp;€</span></li>
+            <li><span>Sirop à l’eau</span><span class="plat__points" aria-hidden="true"></span><span>2&nbsp;€</span></li>
+            <li><span>Café, café chicorée</span><span class="plat__points" aria-hidden="true"></span><span>2,20&nbsp;€</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="carte__mentions">Prix nets, service compris. Viande bovine née, élevée et abattue en France. L’abus d’alcool est dangereux pour la santé, à consommer avec modération.</p>
+    </section>
+
+    <div class="carte__fin">
+      <p>Une table pour ce soir&nbsp;?</p>
+      <a class="bouton bouton--brique" href="tel:+33353016824"><svg class="icone" aria-hidden="true"><use href="#i-tel"/></svg>03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a>
+      <a class="bouton bouton--encre" href="index.html">L’ardoise du jour<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="pied">
+    <div class="pied__haut">
+      <p class="pied__enseigne"><svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>’t Kanneke</p>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Adresse</h2>
+        <p>9 rue du Pot-d’Étain<br>59800 Lille, Vieux-Lille</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Réserver</h2>
+        <p><a href="tel:+33353016824">03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a><br>Du mardi au dimanche</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Services</h2>
+        <p>Midi&nbsp;: 12&nbsp;h – 14&nbsp;h&nbsp;30<br>Soir&nbsp;: 19&nbsp;h – 22&nbsp;h, 23&nbsp;h vendredi et samedi<br>Fermé le lundi et le dimanche soir</p>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>Commerce fictif, créé pour montrer ce que donne un site Standard&nbsp;: plusieurs pages, la carte, une galerie et un formulaire. <a href="https://moreaudigital.fr/">Moreau Digital</a></p>
+      <p class="pied__credits">Images&nbsp;: gravure d’après Bruegel (Met, CC0), houblon de Köhler (1887), photos Unsplash et Wikimedia Commons. Détail des crédits sur la page <a href="photos.html#credits">Photos</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

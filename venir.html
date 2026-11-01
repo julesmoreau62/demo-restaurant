@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Venir et réserver · ’t Kanneke, estaminet du Vieux-Lille</title>
+  <meta name="description" content="Horaires, adresse et accès de ’t Kanneke dans le Vieux-Lille. Réservation par téléphone, demandes de groupe et privatisation de la salle du haut.">
+  <!-- Démo : commerce fictif, à ne pas indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121514">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/grenze-gotisch.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="app.js" defer></script>
+</head>
+<body class="page-venir">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="cruche" viewBox="0 0 32 32"><path fill="currentColor" d="M10.6 2.6h10.8v2.6h-.9v2.1c3.4 1.7 5.8 5.2 5.8 9.3 0 3.6-1.5 7-3.9 9.4l.6 2.1H8.9l.6-2.1C7.2 23.6 5.7 20.2 5.7 16.6c0-4.1 2.4-7.6 5.8-9.3V5.2h-.9V2.6Zm2.1 2.6v2.8l-.6.3c-3.1 1.4-5.1 4.6-5.1 8.3 0 1.1.2 2.2.5 3.2h16.9c.3-1 .5-2.1.5-3.2 0-3.7-2-6.9-5.1-8.3l-.6-.3V5.2h-6.5Z"/><path fill="currentColor" d="M8 21.9h16v1.6H8zM5.9 2.2l4.7.4v2.6Z"/><path d="M22.3 8.4c3.6-.9 6.4 1 6.3 4.3-.1 2.6-1.9 4.5-4.6 5.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></symbol>
+  </svg>
+
+  <p class="bandeau-demo">Démo · commerce fictif, réalisé par <a href="https://moreaudigital.fr/">Moreau Digital</a> · formule Standard</p>
+
+  <header class="entete">
+    <a class="enseigne" href="index.html">
+      <svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>
+      <span class="enseigne__nom">’t Kanneke</span>
+      <span class="enseigne__sous">Estaminet · Vieux-Lille</span>
+    </a>
+    <nav class="nav" aria-label="Pages du site">
+      <a href="index.html">L’ardoise</a>
+      <a href="carte.html">La carte</a>
+      <a href="photos.html">Photos</a>
+      <a href="venir.html" aria-current="page">Venir<span class="nav__plus"> &amp; groupes</span></a>
+    </nav>
+    <a class="entete__tel" href="tel:+33353016824"><svg class="icone" aria-hidden="true"><use href="#i-tel"/></svg><span class="entete__tel-mot">Réserver</span><span class="entete__tel-num">03 53 01 68 24</span></a>
+  </header>
+
+  <main id="contenu" class="venir papier">
+    <div class="venir__tete">
+      <h1 class="page-titre">Venir</h1>
+      <p class="venir__chapo">Dans le Vieux-Lille, à cinq minutes à pied de la Grand-Place. On réserve par téléphone, et pour les groupes, on écrit dans le cahier.</p>
+    </div>
+
+    <div class="venir__grille">
+      <section class="bloc" aria-labelledby="t-reserver">
+        <h2 class="bloc__titre" id="t-reserver">Réserver une table</h2>
+        <p>On décroche nous-mêmes, du mardi au dimanche, de 10&nbsp;h à 22&nbsp;h.</p>
+        <a class="numero" href="tel:+33353016824">03&nbsp;53&nbsp;01 68&nbsp;24</a>
+        <p class="etat etat--papier" data-etat hidden><span class="etat__point" aria-hidden="true"></span><span data-etat-texte></span></p>
+        <p class="bloc__note">À partir de 8 personnes, passez plutôt par la demande de groupe.</p>
+      </section>
+
+      <section class="bloc" aria-labelledby="t-horaires">
+        <h2 class="bloc__titre" id="t-horaires">Les services</h2>
+        <table class="horaires" data-horaires>
+          <caption class="visuellement-cache">Horaires des services du midi et du soir</caption>
+          <thead class="visuellement-cache"><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+          <tbody>
+            <tr data-jour="2"><th scope="row">Mardi</th><td>12&nbsp;h – 14&nbsp;h&nbsp;30</td><td>19&nbsp;h – 22&nbsp;h</td></tr>
+            <tr data-jour="3"><th scope="row">Mercredi</th><td>12&nbsp;h – 14&nbsp;h&nbsp;30</td><td>19&nbsp;h – 22&nbsp;h</td></tr>
+            <tr data-jour="4"><th scope="row">Jeudi</th><td>12&nbsp;h – 14&nbsp;h&nbsp;30</td><td>19&nbsp;h – 22&nbsp;h</td></tr>
+            <tr data-jour="5"><th scope="row">Vendredi</th><td>12&nbsp;h – 14&nbsp;h&nbsp;30</td><td>19&nbsp;h – 23&nbsp;h</td></tr>
+            <tr data-jour="6"><th scope="row">Samedi</th><td>12&nbsp;h – 14&nbsp;h&nbsp;30</td><td>19&nbsp;h – 23&nbsp;h</td></tr>
+            <tr data-jour="0"><th scope="row">Dimanche</th><td>12&nbsp;h – 15&nbsp;h</td><td class="horaires__ferme">fermé</td></tr>
+            <tr data-jour="1"><th scope="row">Lundi</th><td class="horaires__ferme" colspan="2">fermé toute la journée</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bloc" aria-labelledby="t-adresse">
+        <h2 class="bloc__titre" id="t-adresse">L’adresse</h2>
+        <p class="adresse">9 rue du Pot-d’Étain<br>59800 Lille</p>
+        <ul class="acces">
+          <li><strong>Métro</strong> Rihour, ligne 1, à 7 minutes à pied.</li>
+          <li><strong>Train</strong> gare Lille-Flandres, à 12 minutes.</li>
+          <li><strong>Voiture</strong> parking du Nouveau Siècle, à 5 minutes.</li>
+          <li><strong>Vélo</strong> une station V’Lille au bout de la rue.</li>
+        </ul>
+        <div class="adresse__actions">
+          <a class="bouton bouton--brique" href="https://www.google.com/maps/dir/?api=1&amp;destination=Vieux-Lille%2C%2059800%20Lille" target="_blank" rel="noopener">Itinéraire<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+          <button class="bouton bouton--encre js-seul" type="button" data-plan>Afficher le plan</button>
+        </div>
+        <p class="bloc__note js-seul" data-plan-note>Le plan Google ne se charge que si vous le demandez.</p>
+        <div class="plan" data-plan-zone hidden></div>
+      </section>
+    </div>
+
+    <!-- Les groupes : le formulaire, présenté comme le cahier de réservations -->
+    <section class="groupes" id="groupes" aria-labelledby="t-groupes">
+      <div class="groupes__intro">
+        <h2 class="page-titre page-titre--moyen" id="t-groupes">Fêtes &amp; groupes</h2>
+        <p>La salle du haut, 24 places, se privatise du mardi au jeudi soir et le dimanche midi. Menus de groupe à partir de 29&nbsp;€. Dites-nous la date et le nombre, on vous rappelle sous 24&nbsp;h pour choisir le menu.</p>
+        <p class="groupes__bon"><strong>Bons cadeaux.</strong> Offrez un repas&nbsp;: bons de 30, 50 ou 80&nbsp;€, valables un an, au comptoir ou par téléphone.</p>
+      </div>
+
+      <div class="cahier">
+        <p class="cahier__entete" aria-hidden="true"><span>Cahier des réservations</span><span>Groupes</span></p>
+        <form class="cahier__form" data-groupe action="#" method="post">
+          <div class="champ">
+            <label for="g-nom">Nom</label>
+            <input id="g-nom" name="nom" type="text" autocomplete="name" required>
+          </div>
+          <div class="champ champ--demi">
+            <label for="g-tel">Téléphone</label>
+            <input id="g-tel" name="tel" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="champ champ--demi">
+            <label for="g-mail">E-mail <span class="champ__facultatif">(facultatif)</span></label>
+            <input id="g-mail" name="mail" type="email" autocomplete="email">
+          </div>
+          <div class="champ champ--demi">
+            <label for="g-date">Date</label>
+            <input id="g-date" name="date" type="date" required>
+          </div>
+          <div class="champ champ--demi">
+            <label for="g-couverts">Couverts</label>
+            <input id="g-couverts" name="couverts" type="number" min="8" max="60" value="12" inputmode="numeric" required>
+          </div>
+          <div class="champ">
+            <label for="g-occasion">Occasion</label>
+            <select id="g-occasion" name="occasion">
+              <option>Anniversaire</option>
+              <option>Repas d’entreprise</option>
+              <option>Communion ou baptême</option>
+              <option>Repas de famille</option>
+              <option>Autre chose</option>
+            </select>
+          </div>
+          <div class="champ">
+            <label for="g-mot">Un mot pour nous <span class="champ__facultatif">(facultatif)</span></label>
+            <textarea id="g-mot" name="message" rows="3"></textarea>
+          </div>
+          <p class="cahier__rgpd">Vos coordonnées servent seulement à vous rappeler pour ce repas.</p>
+          <div class="cahier__envoi js-seul">
+            <button class="bouton bouton--brique" type="submit">Envoyer la demande</button>
+            <p class="cahier__demo">Démo&nbsp;: rien n’est envoyé. Sur le vrai site, la demande arrive par e-mail au restaurant.</p>
+          </div>
+          <p class="cahier__sans-js">Pour une demande de groupe, appelez-nous au <a href="tel:+33353016824">03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a>.</p>
+        </form>
+        <div class="cahier__merci" data-merci tabindex="-1" hidden>
+          <p class="cahier__ecrit">C’est noté, <span data-merci-nom></span>&nbsp;!</p>
+          <p class="cahier__detail"><span data-merci-detail></span>. On vous rappelle sous 24&nbsp;h pour choisir le menu.</p>
+          <p class="cahier__demo">Démo&nbsp;: rien n’a été envoyé.</p>
+          <button class="bouton bouton--encre" type="button" data-merci-autre>Faire une autre demande</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pied">
+    <div class="pied__haut">
+      <p class="pied__enseigne"><svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>’t Kanneke</p>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Adresse</h2>
+        <p>9 rue du Pot-d’Étain<br>59800 Lille, Vieux-Lille</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Réserver</h2>
+        <p><a href="tel:+33353016824">03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a><br>Du mardi au dimanche</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Services</h2>
+        <p>Midi&nbsp;: 12&nbsp;h – 14&nbsp;h&nbsp;30<br>Soir&nbsp;: 19&nbsp;h – 22&nbsp;h, 23&nbsp;h vendredi et samedi<br>Fermé le lundi et le dimanche soir</p>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>Commerce fictif, créé pour montrer ce que donne un site Standard&nbsp;: plusieurs pages, la carte, une galerie et un formulaire. <a href="https://moreaudigital.fr/">Moreau Digital</a></p>
+      <p class="pied__credits">Images&nbsp;: gravure d’après Bruegel (Met, CC0), houblon de Köhler (1887), photos Unsplash et Wikimedia Commons. Détail des crédits sur la page <a href="photos.html#credits">Photos</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

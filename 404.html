@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Page introuvable · ’t Kanneke</title>
+  <!-- GitHub Pages sert cette page pour toute adresse inconnue du projet : les liens partent de sa racine -->
+  <base href="/demo-restaurant/">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121514">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-perdue">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="cruche" viewBox="0 0 32 32"><path fill="currentColor" d="M10.6 2.6h10.8v2.6h-.9v2.1c3.4 1.7 5.8 5.2 5.8 9.3 0 3.6-1.5 7-3.9 9.4l.6 2.1H8.9l.6-2.1C7.2 23.6 5.7 20.2 5.7 16.6c0-4.1 2.4-7.6 5.8-9.3V5.2h-.9V2.6Zm2.1 2.6v2.8l-.6.3c-3.1 1.4-5.1 4.6-5.1 8.3 0 1.1.2 2.2.5 3.2h16.9c.3-1 .5-2.1.5-3.2 0-3.7-2-6.9-5.1-8.3l-.6-.3V5.2h-6.5Z"/><path fill="currentColor" d="M8 21.9h16v1.6H8zM5.9 2.2l4.7.4v2.6Z"/><path d="M22.3 8.4c3.6-.9 6.4 1 6.3 4.3-.1 2.6-1.9 4.5-4.6 5.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></symbol>
+  </svg>
+
+  <header class="entete entete--seule">
+    <a class="enseigne" href="index.html">
+      <svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>
+      <span class="enseigne__nom">’t Kanneke</span>
+      <span class="enseigne__sous">Estaminet · Vieux-Lille</span>
+    </a>
+  </header>
+
+  <main class="ardoise">
+    <div class="ardoise__cadre perdu">
+      <img class="perdu__dessin" src="gravures/maigre-600.webp" width="600" height="863" alt="Gravure d’après Bruegel&nbsp;: un joueur de cornemuse tout maigre est poussé dehors par deux gros mangeurs.">
+      <div class="perdu__texte">
+        <h1 class="perdu__titre">Cette page n’existe pas.</h1>
+        <p>Comme le joueur de cornemuse de la gravure, vous voilà à la porte. Rentrez par ici&nbsp;:</p>
+        <div class="ardoise__actions">
+          <a class="bouton bouton--or" href="index.html">L’ardoise du jour<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+          <a class="bouton bouton--craie" href="carte.html">La carte</a>
+        </div>
+        <p class="perdu__citation">«&nbsp;Hors d’ici, Maigre-dos&nbsp;[…], car c’est Grasse-Cuisine.&nbsp;»<br><span>Légende de <cite>La Cuisine grasse</cite>, gravure d’après Bruegel, 1563.</span></p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

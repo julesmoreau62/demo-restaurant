@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>’t Kanneke · Estaminet flamand dans le Vieux-Lille</title>
+  <meta name="description" content="’t Kanneke, estaminet du Vieux-Lille : cuisine du Nord faite maison, plat du jour à l’ardoise, bières de la région et jeux flamands. Réservation par téléphone.">
+  <!-- Démo : commerce fictif, à ne pas indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121514">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/grenze-gotisch.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/playwrite-fr-trad.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    /* Avant le premier affichage : le jour qu'il est à Lille, pour montrer tout de suite la bonne ardoise. */
+    (function (d) {
+      d.classList.add("js");
+      try {
+        var q = /[?&]jour=([0-6])/.exec(location.search);
+        d.setAttribute("data-auj", q ? q[1] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Paris", weekday: "short" }).format(new Date())));
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
+  <script src="app.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "’t Kanneke",
+    "description": "Estaminet flamand du Vieux-Lille. Cuisine du Nord faite maison (carbonade, potjevleesch, welsh), plat du jour à l’ardoise, bières de la région et jeux flamands.",
+    "servesCuisine": ["Cuisine flamande", "Cuisine du Nord"],
+    "priceRange": "€€",
+    "telephone": "+33353016824",
+    "acceptsReservations": "True",
+    "hasMenu": "carte.html",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9 rue du Pot-d’Étain",
+      "postalCode": "59800",
+      "addressLocality": "Lille",
+      "addressCountry": "FR"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"], "opens": "12:00", "closes": "14:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"], "opens": "19:00", "closes": "22:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "12:00", "closes": "14:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "19:00", "closes": "23:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "12:00", "closes": "15:00" }
+    ]
+  }
+  </script>
+</head>
+<body class="page-ardoise">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- La craie : un grain qui troue les lettres et un léger tremblé -->
+      <filter id="craie" x="-4%" y="-8%" width="108%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="grain"/>
+        <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.45" result="trous"/>
+        <feComposite in="SourceGraphic" in2="trous" operator="in" result="poudre"/>
+        <feTurbulence type="turbulence" baseFrequency=".045" numOctaves="1" seed="9" result="onde"/>
+        <feDisplacementMap in="poudre" in2="onde" scale="1.4" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+    <!-- La marque : une cruche de grès, le « kanneke » -->
+    <symbol id="cruche" viewBox="0 0 32 32"><path fill="currentColor" d="M10.6 2.6h10.8v2.6h-.9v2.1c3.4 1.7 5.8 5.2 5.8 9.3 0 3.6-1.5 7-3.9 9.4l.6 2.1H8.9l.6-2.1C7.2 23.6 5.7 20.2 5.7 16.6c0-4.1 2.4-7.6 5.8-9.3V5.2h-.9V2.6Zm2.1 2.6v2.8l-.6.3c-3.1 1.4-5.1 4.6-5.1 8.3 0 1.1.2 2.2.5 3.2h16.9c.3-1 .5-2.1.5-3.2 0-3.7-2-6.9-5.1-8.3l-.6-.3V5.2h-6.5Z"/><path fill="currentColor" d="M8 21.9h16v1.6H8zM5.9 2.2l4.7.4v2.6Z"/><path d="M22.3 8.4c3.6-.9 6.4 1 6.3 4.3-.1 2.6-1.9 4.5-4.6 5.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></symbol>
+  </svg>
+
+  <p class="bandeau-demo">Démo · commerce fictif, réalisé par <a href="https://moreaudigital.fr/">Moreau Digital</a> · formule Standard</p>
+
+  <header class="entete">
+    <a class="enseigne" href="index.html">
+      <svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>
+      <span class="enseigne__nom">’t Kanneke</span>
+      <span class="enseigne__sous">Estaminet · Vieux-Lille</span>
+    </a>
+    <nav class="nav" aria-label="Pages du site">
+      <a href="index.html" aria-current="page">L’ardoise</a>
+      <a href="carte.html">La carte</a>
+      <a href="photos.html">Photos</a>
+      <a href="venir.html">Venir<span class="nav__plus"> &amp; groupes</span></a>
+    </nav>
+    <a class="entete__tel" href="tel:+33353016824"><svg class="icone" aria-hidden="true"><use href="#i-tel"/></svg><span class="entete__tel-mot">Réserver</span><span class="entete__tel-num">03 53 01 68 24</span></a>
+  </header>
+
+  <main id="contenu">
+
+    <!-- L'ardoise du jour : le plat change avec le jour de la semaine -->
+    <section class="ardoise" aria-labelledby="ardoise-titre">
+      <div class="ardoise__cadre">
+        <img class="ardoise__houblon" src="gravures/houblon-cones-320.webp" srcset="gravures/houblon-cones-320.webp 320w, gravures/houblon-560.webp 560w, gravures/houblon-900.webp 900w" sizes="(min-width: 1000px) 520px, (min-width: 700px) 380px, 128px" width="320" height="518" alt="" aria-hidden="true">
+        <img class="ardoise__dessin" src="gravures/foyer-480.webp" srcset="gravures/foyer-480.webp 480w, gravures/foyer-680.webp 680w" sizes="(min-width: 1000px) 380px, 60vw" width="480" height="1013" alt="" aria-hidden="true">
+
+        <div class="ardoise__texte">
+          <h1 class="ardoise__titre" id="ardoise-titre"><span class="visuellement-cache">L’ardoise de ’t Kanneke : </span><span data-titre-jour>Cette semaine à l’ardoise</span></h1>
+          <p class="ardoise__intro">Cuisine du Nord faite maison, servie midi et soir.</p>
+
+          <ol class="semaine" data-semaine aria-live="polite">
+            <li class="jour" data-jour="2">
+              <h2 class="jour__nom">Mardi</h2>
+              <p class="jour__plat">Coq à la bière, chicons braisés</p>
+              <p class="jour__prix">14,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: tarte au sucre</p>
+            </li>
+            <li class="jour" data-jour="3">
+              <h2 class="jour__nom">Mercredi</h2>
+              <p class="jour__plat">Hochepot de joue de bœuf aux légumes d’hiver</p>
+              <p class="jour__prix">14,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: riz au lait à la cassonade</p>
+            </li>
+            <li class="jour" data-jour="4">
+              <h2 class="jour__nom">Jeudi</h2>
+              <p class="jour__plat">Lapin aux pruneaux et à la bière brune</p>
+              <p class="jour__prix">14,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: crème brûlée à la chicorée</p>
+            </li>
+            <li class="jour" data-jour="5">
+              <h2 class="jour__nom">Vendredi</h2>
+              <p class="jour__plat">Waterzoï de cabillaud aux crevettes grises</p>
+              <p class="jour__prix">15,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: gaufre fourrée à la vergeoise</p>
+            </li>
+            <li class="jour" data-jour="6">
+              <h2 class="jour__nom">Samedi</h2>
+              <p class="jour__plat">Jambonneau à la bière, purée au maroilles</p>
+              <p class="jour__prix">16,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: tarte aux pommes et spéculoos</p>
+            </li>
+            <li class="jour" data-jour="0">
+              <h2 class="jour__nom">Dimanche</h2>
+              <p class="jour__plat">Poulet rôti du dimanche, frites maison</p>
+              <p class="jour__prix">15,50&nbsp;€</p>
+              <p class="jour__dessert">En dessert&nbsp;: merveilleux au chocolat</p>
+            </li>
+            <li class="jour jour--ferme" data-jour="1">
+              <h2 class="jour__nom">Lundi</h2>
+              <p class="jour__plat">Le lundi, on ferme&nbsp;: la cuisine se repose.</p>
+            </li>
+          </ol>
+
+          <p class="ardoise__formule" data-formule>Le midi, du mardi au vendredi&nbsp;: entrée + plat ou plat + dessert, 18,50&nbsp;€.</p>
+          <p class="etat" data-etat hidden><span class="etat__point" aria-hidden="true"></span><span data-etat-texte></span></p>
+
+          <div class="sous-bocks" data-sous-bocks hidden>
+            <p class="sous-bocks__aide" id="sous-bocks-aide">Toute la semaine&nbsp;:</p>
+            <div class="sous-bocks__rang" role="group" aria-labelledby="sous-bocks-aide"></div>
+          </div>
+
+          <div class="ardoise__actions">
+            <a class="bouton bouton--or" href="tel:+33353016824"><svg class="icone" aria-hidden="true"><use href="#i-tel"/></svg>Réserver au 03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a>
+            <a class="bouton bouton--craie" href="carte.html">Toute la carte<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Le règlement affiché au mur : les infos pratiques, à la façon d'un estaminet -->
+    <section class="mur" aria-labelledby="reglement-titre">
+      <div class="affiche">
+        <h2 class="affiche__titre" id="reglement-titre">Règlement de la maison</h2>
+        <ol class="articles">
+          <li class="article"><span class="article__num">Art.&nbsp;1</span>Ici, tout est fait maison. La carbonade mijote quatre heures, le potjevleesch prend une nuit, les frites sont coupées le matin.</li>
+          <li class="article"><span class="article__num">Art.&nbsp;2</span>Les frites cuisent à la graisse de bœuf, comme il se doit. Végétariens&nbsp;: demandez les pommes grenaille, elles sont cuites à part.</li>
+          <li class="article article--chien"><span class="article__num">Art.&nbsp;3</span>Les chiens sont les bienvenus. Ils ont leur gamelle d’eau, mais pas de saucisse.
+            <figure class="article__gravure"><img src="gravures/chien-600.webp" width="600" height="382" loading="lazy" alt="Gravure : un chien file avec une saucisse dans la gueule."></figure>
+          </li>
+          <li class="article"><span class="article__num">Art.&nbsp;4</span>Grenouille, billard Nicolas, toptafel&nbsp;: les jeux flamands se demandent au comptoir. Le perdant paie la chicorée.</li>
+          <li class="article"><span class="article__num">Art.&nbsp;5</span>On réserve par téléphone. Si l’on ne vient pas, on prévient&nbsp;: la table fera plaisir à d’autres.</li>
+          <li class="article"><span class="article__num">Art.&nbsp;6</span>Les enfants ont leur menu jusqu’à 10&nbsp;ans, une chaise haute et des crayons.</li>
+          <li class="article"><span class="article__num">Art.&nbsp;7</span>Cartes et titres-restaurant acceptés, même pour un café.</li>
+        </ol>
+        <p class="affiche__signature">La direction</p>
+      </div>
+
+      <div class="cadres">
+        <figure class="cadre cadre--large">
+          <img src="photos/salle-poutres-640.webp" srcset="photos/salle-poutres-640.webp 640w, photos/salle-poutres-1200.webp 1200w" sizes="(min-width: 1000px) 560px, 92vw" width="640" height="427" loading="lazy" alt="La salle de l’estaminet&nbsp;: poutres sombres, tables de bois et cadres aux murs.">
+          <figcaption>La grande salle, sous les poutres</figcaption>
+        </figure>
+        <figure class="cadre">
+          <img src="photos/assiette-nord-480.webp" srcset="photos/assiette-nord-480.webp 480w, photos/assiette-nord-900.webp 900w" sizes="(min-width: 1000px) 340px, 92vw" width="480" height="314" loading="lazy" alt="Une assiette du Nord&nbsp;: welsh, carbonade, potjevleesch et pommes de terre en petites cocottes.">
+          <figcaption>L’assiette du Nord, pour goûter un peu de tout</figcaption>
+        </figure>
+        <a class="lien-craie" href="photos.html">Toutes les photos<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+      </div>
+    </section>
+
+    <!-- La plaque émaillée : les groupes -->
+    <section class="plaque-zone" aria-labelledby="groupes-titre">
+      <div class="plaque">
+        <h2 class="plaque__titre" id="groupes-titre">Fêtes &amp; groupes</h2>
+        <p class="plaque__texte">La salle du haut, 24 places, se privatise du mardi au jeudi soir et le dimanche midi. Menus de groupe à partir de 29&nbsp;€.</p>
+        <a class="bouton bouton--brique" href="venir.html#groupes">Faire une demande<svg class="icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pied">
+    <div class="pied__haut">
+      <p class="pied__enseigne"><svg class="enseigne__cruche" aria-hidden="true"><use href="#cruche"/></svg>’t Kanneke</p>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Adresse</h2>
+        <p>9 rue du Pot-d’Étain<br>59800 Lille, Vieux-Lille</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Réserver</h2>
+        <p><a href="tel:+33353016824">03&nbsp;53&nbsp;01&nbsp;68&nbsp;24</a><br>Du mardi au dimanche</p>
+      </div>
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Services</h2>
+        <p>Midi&nbsp;: 12&nbsp;h – 14&nbsp;h&nbsp;30<br>Soir&nbsp;: 19&nbsp;h – 22&nbsp;h, 23&nbsp;h vendredi et samedi<br>Fermé le lundi et le dimanche soir</p>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>Commerce fictif, créé pour montrer ce que donne un site Standard&nbsp;: plusieurs pages, la carte, une galerie et un formulaire. <a href="https://moreaudigital.fr/">Moreau Digital</a></p>
+      <p class="pied__credits">Images&nbsp;: gravure d’après Bruegel (Met, CC0), houblon de Köhler (1887), photos Unsplash et Wikimedia Commons. Détail des crédits sur la page <a href="photos.html#credits">Photos</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

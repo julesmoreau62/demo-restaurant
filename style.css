@@ -1,0 +1,947 @@
+/* ==========================================================================
+   ’t Kanneke — démo Standard, un estaminet du Vieux-Lille
+   Chaque page reprend un support de la maison : l'ardoise du jour (accueil),
+   la carte imprimée, le mur de briques et ses cadres (photos), le cahier de
+   réservations (venir et groupes). Enseigne en lettres dorées sur verre noir,
+   gravures d'après Bruegel : à la craie sur l'ardoise, à l'encre sur le papier.
+   Mobile d'abord.
+   ========================================================================== */
+
+@font-face { font-family: "Grenze Gotisch"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("fonts/grenze-gotisch.woff2") format("woff2"); }
+@font-face { font-family: "Vollkorn"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("fonts/vollkorn.woff2") format("woff2"); }
+@font-face { font-family: "Vollkorn"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("fonts/vollkorn-italique.woff2") format("woff2"); }
+@font-face { font-family: "Playwrite FR Trad"; font-style: normal; font-weight: 100 400; font-display: swap; src: url("fonts/playwrite-fr-trad.woff2") format("woff2"); }
+
+:root {
+  --nuit: #121514;
+  --ardoise: #1f2528;
+  --craie: #f2eee6;
+  --craie-douce: rgba(242, 238, 230, .74);
+  --craie-jaune: #f3d06a;
+  --craie-rose: #f1a99c;
+  --craie-verte: #a9d99b;
+  --or: #d9ab4a;
+  --or-clair: #f3d690;
+  --brique: #a63a2b;
+  --brique-fonce: #7a2a1f;
+  --papier: #f3ead9;
+  --papier-fonce: #e4d5ba;
+  --encre: #241a13;
+  --encre-douce: #5b4a3c;
+  --bois: #5c3d27;
+  --email: #f5f0e3;
+
+  --gothique: "Grenze Gotisch", "Iowan Old Style", Georgia, serif;
+  --texte: "Vollkorn", "Iowan Old Style", Georgia, serif;
+  --main: "Playwrite FR Trad", "Segoe Script", "Bradley Hand", cursive;
+
+  --g: 18px;
+  --large: 1220px;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--texte);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-synthesis: none;
+  font-variant-numeric: lining-nums;
+  color: var(--encre);
+  background: var(--nuit);
+  overflow-x: clip;
+}
+h1, h2, h3, p, ol, ul, figure, fieldset, legend, dl, dd { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+fieldset { border: 0; min-width: 0; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--or); outline-offset: 3px; }
+.icone { flex: none; width: 20px; height: 20px; }
+
+/* Passage d'une page à l'autre : l'enseigne reste, le contenu glisse */
+@view-transition { navigation: auto; }
+.entete { view-transition-name: entete; }
+.bandeau-demo { view-transition-name: bandeau; }
+::view-transition-old(root) { animation: 160ms ease-in both page-sort; }
+::view-transition-new(root) { animation: 360ms cubic-bezier(.2, .8, .2, 1) both page-entre; }
+@keyframes page-sort { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes page-entre { from { opacity: 0; transform: translateY(18px); } }
+
+/* --------------------------------------------------------------------------
+   Bandeau démo, enseigne et navigation
+   -------------------------------------------------------------------------- */
+.bandeau-demo {
+  padding: 6px 14px;
+  font-size: .8rem;
+  line-height: 1.35;
+  text-align: center;
+  color: #fff4e4;
+  background: var(--brique-fonce);
+}
+.bandeau-demo a { font-weight: 700; }
+
+.entete {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px var(--g);
+  padding: 14px var(--g) 0;
+  color: var(--craie);
+  background: var(--nuit);
+  border-bottom: 1px solid rgba(217, 171, 74, .28);
+}
+.enseigne {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: 10px;
+  text-decoration: none;
+}
+.enseigne__cruche { grid-row: span 2; width: 34px; height: 34px; color: var(--or); }
+.enseigne__nom, .pied__enseigne {
+  font-family: var(--gothique);
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: .01em;
+  color: var(--or);
+  background: linear-gradient(180deg, #fff0c0 0%, #e9be5c 42%, #a87a26 52%, #f0cf7a 72%, #c99a3a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(1px 2px 0 #000);
+}
+.enseigne__nom { font-size: 2.15rem; }
+.enseigne__sous { font-size: .8rem; line-height: 1.2; color: var(--or); }
+
+.entete__tel {
+  grid-column: 2;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-weight: 650;
+  text-decoration: none;
+  color: var(--nuit);
+  background: var(--or);
+}
+.entete__tel:hover { background: var(--or-clair); }
+.entete__tel-num { display: none; }
+
+.nav {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  margin: 0 calc(-1 * var(--g));
+  border-top: 1px solid rgba(242, 238, 230, .1);
+}
+.nav a {
+  flex: 1;
+  padding: 11px 4px 12px;
+  font-size: .98rem;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  color: var(--craie-douce);
+}
+.nav a + a { border-left: 1px solid rgba(242, 238, 230, .08); }
+.nav a:hover { color: var(--craie); }
+.nav a[aria-current="page"] { color: var(--or-clair); box-shadow: inset 0 -3px 0 var(--or); }
+.nav__plus { display: none; }
+
+@media (min-width: 960px) {
+  .entete { grid-template-columns: auto 1fr auto; padding: 16px 32px; }
+  .enseigne__nom { font-size: 2.6rem; }
+  .nav { grid-column: 2; grid-row: 1; justify-content: center; gap: 4px; margin: 0; border: 0; }
+  .entete__tel { grid-column: 3; }
+  .nav a { flex: none; padding: 10px 14px; font-size: 1.05rem; }
+  .nav a + a { border: 0; }
+  .nav__plus { display: inline; }
+  .entete__tel-mot { display: none; }
+  .entete__tel-num { display: inline; }
+}
+
+/* --------------------------------------------------------------------------
+   Boutons : rectangles, comme des étiquettes
+   -------------------------------------------------------------------------- */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 20px;
+  font-weight: 650;
+  font-size: 1.02rem;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.bouton--or { color: var(--nuit); background: var(--or); border-color: var(--or); }
+.bouton--or:hover { background: var(--or-clair); border-color: var(--or-clair); }
+.bouton--craie { color: var(--craie); border-color: rgba(242, 238, 230, .7); }
+.bouton--craie:hover { background: rgba(242, 238, 230, .1); }
+.bouton--brique { color: #fff6ea; background: var(--brique); border-color: var(--brique); }
+.bouton--brique:hover { background: var(--brique-fonce); border-color: var(--brique-fonce); }
+.bouton--encre { color: var(--encre); border-color: var(--encre); background: transparent; }
+.bouton--encre:hover { color: var(--papier); background: var(--encre); }
+
+/* --------------------------------------------------------------------------
+   L'ardoise (accueil)
+   -------------------------------------------------------------------------- */
+.ardoise { position: relative; overflow: hidden; background: var(--nuit); }
+.ardoise__cadre {
+  position: relative;
+  overflow: hidden;
+  padding: 30px var(--g) 34px;
+  color: var(--craie);
+  border-top: 9px solid var(--bois);
+  border-bottom: 9px solid var(--bois);
+  background:
+    radial-gradient(70% 38% at 26% 34%, rgba(242, 238, 230, .07), transparent 70%),
+    radial-gradient(55% 30% at 78% 72%, rgba(242, 238, 230, .05), transparent 70%),
+    linear-gradient(172deg, transparent 40%, rgba(242, 238, 230, .035) 47%, transparent 54%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    var(--ardoise);
+}
+/* le bois du cadre : un liseré plus clair, comme une baguette vernie */
+.ardoise__cadre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255, 220, 170, .18), inset 0 10px 24px rgba(0, 0, 0, .35), inset 0 -10px 24px rgba(0, 0, 0, .3);
+}
+
+.ardoise__houblon {
+  position: absolute;
+  z-index: 2;
+  top: -26px;
+  right: -16px;
+  width: 128px;
+  height: auto;
+  transform: rotate(-14deg);
+  transform-origin: 70% 0;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, .5));
+}
+.ardoise__dessin {
+  position: absolute;
+  right: -10px;
+  top: 150px;
+  width: 64%;
+  height: auto;
+  opacity: .2;
+  pointer-events: none;
+  filter: invert(1);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 45%);
+  mask-image: linear-gradient(to right, transparent, #000 45%);
+}
+
+.ardoise__texte { position: relative; z-index: 1; }
+.ardoise__titre {
+  display: inline-block;
+  padding-bottom: 10px;
+  margin-right: 110px;
+  font-family: var(--main);
+  font-weight: 300;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  filter: url(#craie);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6c40-4 80-3 120-1s90 3 120-1 40-1 56 0' fill='none' stroke='%23f2eee6' stroke-width='2.2' stroke-linecap='round' opacity='.8'/%3E%3C/svg%3E") left bottom / 100% 10px no-repeat;
+}
+.ardoise__intro { margin: 10px 92px 0 0; max-width: 30rem; color: var(--craie-douce); font-style: italic; }
+
+/* La semaine : sans JavaScript, toute la liste ; avec, un seul jour à la fois */
+.semaine { display: grid; gap: 18px; margin-top: 22px; }
+.jour__nom { font-family: var(--gothique); font-weight: 700; font-size: 1.35rem; line-height: 1; color: var(--craie-jaune); }
+.jour__plat {
+  margin-top: 4px;
+  font-family: var(--main);
+  font-weight: 300;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  text-wrap: balance;
+  filter: url(#craie);
+}
+.jour__prix {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--main);
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--craie-jaune);
+  filter: url(#craie);
+}
+.jour__dessert { margin-top: 2px; font-family: var(--main); font-weight: 300; font-size: .98rem; line-height: 1.7; color: var(--craie-douce); filter: url(#craie); }
+
+.js .semaine { display: block; min-height: 12.5rem; }
+.js .jour { display: none; }
+.js .jour.est-choisi,
+.js:not(.ardoise-prete)[data-auj="0"] .jour[data-jour="0"],
+.js:not(.ardoise-prete)[data-auj="1"] .jour[data-jour="1"],
+.js:not(.ardoise-prete)[data-auj="2"] .jour[data-jour="2"],
+.js:not(.ardoise-prete)[data-auj="3"] .jour[data-jour="3"],
+.js:not(.ardoise-prete)[data-auj="4"] .jour[data-jour="4"],
+.js:not(.ardoise-prete)[data-auj="5"] .jour[data-jour="5"],
+.js:not(.ardoise-prete)[data-auj="6"] .jour[data-jour="6"] { display: block; }
+.js .jour__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.js .jour__plat { font-weight: 400; font-size: clamp(1.8rem, 8vw, 3.5rem); line-height: 1.5; margin-top: 0; }
+.js .jour__prix {
+  margin: 4px 0 0 -12px;
+  padding: 10px 34px 14px 26px;
+  font-size: clamp(1.6rem, 6.4vw, 2.4rem);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M18 44C10 22 52 8 104 9c52 1 90 12 88 33-2 23-56 33-106 31C40 71 6 60 16 36c6-14 30-24 64-28' fill='none' stroke='%23f3d06a' stroke-width='2.6' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.js .jour__dessert { font-size: clamp(1rem, 3.9vw, 1.35rem); margin-top: 6px; }
+.jour--ferme .jour__plat { color: var(--craie-rose); }
+
+.ardoise__formule { margin-top: 16px; max-width: 34rem; color: var(--craie-douce); }
+.etat { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-weight: 600; }
+.etat__point { flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--craie-rose); box-shadow: 0 0 0 4px rgba(241, 169, 156, .18); }
+.etat--ouvert .etat__point { background: var(--craie-verte); box-shadow: 0 0 0 4px rgba(169, 217, 155, .2); }
+
+/* Les sous-bocks : un par jour, on tape dessus pour réécrire l'ardoise */
+.sous-bocks { margin-top: 22px; }
+.sous-bocks__aide { font-size: .92rem; color: var(--craie-douce); }
+.sous-bocks__rang { display: grid; grid-template-columns: repeat(7, minmax(0, 50px)); gap: 6px; margin-top: 8px; }
+.sous-bock {
+  --r: 0deg;
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: 40px;
+  padding: 0;
+  font-family: var(--gothique);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1;
+  color: var(--brique);
+  background: var(--papier);
+  border: 0;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 3px var(--papier), inset 0 0 0 4.5px currentColor, 0 3px 0 rgba(0, 0, 0, .45);
+  transform: rotate(var(--r));
+  cursor: pointer;
+  transition: transform .18s ease, background-color .18s, color .18s;
+}
+.sous-bock:hover { transform: rotate(0) translateY(-2px); }
+.sous-bock[aria-pressed="true"] { color: var(--nuit); background: var(--or); box-shadow: inset 0 0 0 3px var(--or), inset 0 0 0 4.5px var(--nuit), 0 5px 0 rgba(0, 0, 0, .5); transform: rotate(0) translateY(-3px); }
+.sous-bock--ferme { color: #8b7f70; text-decoration: line-through; text-decoration-thickness: 2px; }
+.sous-bock--auj::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -10px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--craie-jaune);
+}
+
+.ardoise__actions { display: grid; gap: 10px; margin-top: 26px; }
+
+/* La craie écrit, ligne après ligne. L'animation repart quand un autre jour s'affiche. */
+@keyframes ecrire { from { clip-path: inset(-40% 100% -40% 0); } to { clip-path: inset(-40% 0 -40% 0); } }
+.js .ardoise__titre { animation: ecrire 900ms .2s cubic-bezier(.35, .1, .35, 1) backwards; }
+.js .jour__plat { animation: ecrire 1400ms .55s cubic-bezier(.35, .1, .35, 1) backwards; }
+.js .jour__prix { animation: ecrire 600ms 1.8s cubic-bezier(.35, .1, .35, 1) backwards; }
+.js .jour__dessert { animation: ecrire 900ms 2.2s cubic-bezier(.35, .1, .35, 1) backwards; }
+.ardoise-reecrite .jour__plat { animation-delay: .1s; }
+.ardoise-reecrite .jour__prix { animation-delay: 1.2s; }
+.ardoise-reecrite .jour__dessert { animation-delay: 1.6s; }
+
+/* L'éponge : passe sur l'ardoise avant qu'on réécrive */
+.eponge {
+  position: absolute;
+  z-index: 3;
+  top: -10%;
+  bottom: -10%;
+  left: 0;
+  width: 46%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(242, 238, 230, .12) 35%, rgba(242, 238, 230, .2) 50%, rgba(242, 238, 230, .1) 65%, transparent);
+  filter: blur(8px);
+}
+
+@media (min-width: 640px) {
+  .ardoise__actions { display: flex; flex-wrap: wrap; }
+  .sous-bocks__rang { grid-template-columns: repeat(7, 54px); gap: 8px; }
+  .sous-bock { font-size: 1.25rem; }
+  .ardoise__houblon { width: 210px; top: -40px; right: -20px; }
+  .ardoise__titre { font-size: 1.3rem; }
+  .ardoise__texte { padding-right: 150px; }
+  .js .jour__plat { font-size: clamp(2.2rem, 6.2vw, 3.5rem); }
+}
+@media (min-width: 1000px) {
+  .ardoise { padding: 34px 32px 46px; background: radial-gradient(80% 60% at 50% 0%, #1d2120, var(--nuit)); }
+  .ardoise__cadre {
+    max-width: var(--large);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 40px;
+    min-height: 600px;
+    padding: 56px 64px 54px;
+    border: 16px solid var(--bois);
+    border-image: linear-gradient(135deg, #6f4a2e, #4a2f1d 30%, #6a4529 55%, #3f2818 80%, #5c3d27) 1;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .55);
+  }
+  .ardoise__houblon { width: 520px; top: -74px; right: -60px; transform: rotate(-24deg); }
+  .ardoise__dessin {
+    position: relative;
+    top: auto;
+    right: auto;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    width: 100%;
+    margin-bottom: -40px;
+    opacity: .82;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 88%, transparent);
+  }
+  .ardoise__texte { grid-column: 1; grid-row: 1; padding-right: 0; }
+  .ardoise__titre { margin-right: 0; font-size: 1.45rem; }
+  .ardoise__intro { margin-right: 0; font-size: 1.15rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Le mur de briques : le règlement affiché, les cadres
+   -------------------------------------------------------------------------- */
+.mur {
+  display: grid;
+  gap: 44px;
+  padding: 54px var(--g) 64px;
+  background-color: #6d2c22;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='36'%3E%3Crect width='132' height='36' fill='%23552219'/%3E%3Crect x='1' y='1' width='63' height='16' fill='%237d3427'/%3E%3Crect x='67' y='1' width='64' height='16' fill='%23763023'/%3E%3Crect x='-32' y='19' width='63' height='16' fill='%23823829'/%3E%3Crect x='34' y='19' width='63' height='16' fill='%23722d21'/%3E%3Crect x='100' y='19' width='63' height='16' fill='%23823829'/%3E%3C/svg%3E");
+  box-shadow: inset 0 20px 40px rgba(0, 0, 0, .35);
+}
+
+.affiche {
+  position: relative;
+  max-width: 640px;
+  padding: 40px 26px 30px;
+  color: var(--encre);
+  background:
+    radial-gradient(90% 60% at 50% 40%, transparent 60%, rgba(120, 90, 50, .14)),
+    var(--papier);
+  outline: 2px solid var(--encre);
+  outline-offset: -11px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .4) inset, 0 22px 40px rgba(0, 0, 0, .45);
+  transform: rotate(-.6deg);
+}
+/* deux punaises dorées */
+.affiche::before, .affiche::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff2c4, #d9ab4a 45%, #7c5414);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, .45);
+}
+.affiche::before { left: 18px; }
+.affiche::after { right: 18px; }
+.affiche__titre {
+  font-family: var(--gothique);
+  font-weight: 800;
+  font-size: clamp(2.3rem, 10vw, 3.5rem);
+  line-height: .92;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--brique);
+}
+.articles { display: grid; margin-top: 22px; }
+.article { padding: 12px 0; border-top: 1px solid rgba(36, 26, 19, .22); text-wrap: pretty; }
+.article__num { margin-right: 8px; font-family: var(--gothique); font-weight: 700; font-size: 1.28rem; line-height: 1; color: var(--brique); }
+.article__gravure { margin-top: 10px; }
+.article__gravure img { width: 100%; max-width: 300px; height: auto; mix-blend-mode: multiply; }
+.affiche__signature { margin-top: 10px; font-family: var(--main); font-weight: 300; font-size: 1.05rem; text-align: right; }
+
+.cadres { display: grid; gap: 30px; align-content: start; }
+.cadre {
+  padding: 12px 12px 10px;
+  color: var(--encre);
+  background: #f4efe4;
+  border: 10px solid #24170f;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25), 0 18px 30px rgba(0, 0, 0, .45);
+}
+.cadre img { width: 100%; height: auto; }
+.cadre figcaption { margin-top: 8px; font-family: var(--main); font-weight: 300; font-size: .9rem; line-height: 1.6; }
+.cadre--large { transform: rotate(.5deg); }
+.lien-craie {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  min-height: 48px;
+  padding: 10px 16px;
+  font-weight: 650;
+  text-decoration: none;
+  color: var(--papier);
+  border: 2px solid rgba(243, 234, 217, .8);
+  background: rgba(18, 21, 20, .35);
+}
+.lien-craie:hover { background: rgba(18, 21, 20, .6); }
+
+@media (min-width: 1000px) {
+  .mur {
+    grid-template-columns: minmax(0, 620px) minmax(0, 520px);
+    justify-content: center;
+    column-gap: 70px;
+    padding: 90px 32px 100px;
+  }
+  .affiche { padding: 54px 46px 40px; }
+  .article--chien { display: grid; grid-template-columns: 1fr 230px; gap: 0 18px; align-items: center; }
+  .article--chien .article__gravure { margin-top: 0; }
+  .cadres { padding-top: 30px; }
+}
+
+/* --------------------------------------------------------------------------
+   La plaque émaillée
+   -------------------------------------------------------------------------- */
+.plaque-zone { padding: 56px var(--g); background: var(--nuit); }
+.plaque {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 36px 28px 32px;
+  text-align: center;
+  color: var(--brique-fonce);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 16px 16px, #8a8278 3px, #c9c1b2 4px, transparent 5px),
+    radial-gradient(circle at calc(100% - 16px) 16px, #8a8278 3px, #c9c1b2 4px, transparent 5px),
+    radial-gradient(circle at 16px calc(100% - 16px), #8a8278 3px, #c9c1b2 4px, transparent 5px),
+    radial-gradient(circle at calc(100% - 16px) calc(100% - 16px), #8a8278 3px, #c9c1b2 4px, transparent 5px),
+    linear-gradient(160deg, #fffaf0, var(--email) 45%, #e6dfcf);
+  box-shadow: inset 0 0 0 7px var(--email), inset 0 0 0 10px var(--brique), 0 18px 40px rgba(0, 0, 0, .5);
+}
+.plaque__titre { font-family: var(--gothique); font-weight: 800; font-size: clamp(2.2rem, 9vw, 3.4rem); line-height: 1; color: var(--brique); }
+.plaque__texte { max-width: 34rem; margin: 12px auto 22px; color: var(--encre); text-wrap: pretty; }
+
+/* --------------------------------------------------------------------------
+   Pied de page
+   -------------------------------------------------------------------------- */
+.pied { padding: 50px var(--g) 30px; color: var(--craie-douce); background: var(--nuit); border-top: 1px solid rgba(217, 171, 74, .25); }
+.pied__haut, .pied__bas { max-width: var(--large); margin: 0 auto; }
+.pied__haut { display: grid; gap: 26px; }
+.pied__enseigne { display: flex; align-items: center; gap: 12px; font-size: 2.6rem; }
+.pied__enseigne .enseigne__cruche { width: 38px; height: 38px; filter: none; }
+.pied__titre { margin-bottom: 6px; font-family: var(--gothique); font-weight: 700; font-size: 1.3rem; line-height: 1; color: var(--or); }
+.pied a { color: var(--or-clair); }
+.pied__bas { display: grid; gap: 8px; margin-top: 34px; padding-top: 20px; font-size: .9rem; border-top: 1px solid rgba(242, 238, 230, .12); }
+.pied__credits { font-size: .82rem; opacity: .8; }
+@media (min-width: 800px) {
+  .pied__haut { grid-template-columns: 1.3fr repeat(3, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
+   La carte imprimée
+   -------------------------------------------------------------------------- */
+.papier {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(130% 80% at 50% 10%, transparent 55%, rgba(120, 88, 48, .13)),
+    var(--papier);
+}
+.carte { padding: 0 var(--g) 60px; color: var(--encre); }
+.carte__frise { width: calc(100% + 2 * var(--g)); max-width: none; height: auto; max-height: 150px; margin: 0 calc(-1 * var(--g)); object-fit: cover; object-position: center top; mix-blend-mode: multiply; }
+.carte__tete { max-width: 680px; margin: 6px auto 0; text-align: center; }
+.carte__titre, .page-titre {
+  font-family: var(--gothique);
+  font-weight: 800;
+  font-size: clamp(3.4rem, 17vw, 6.4rem);
+  line-height: .85;
+  color: var(--brique);
+}
+.carte__chapo { margin-top: 14px; font-size: 1.12rem; text-wrap: pretty; }
+.carte__maison { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-weight: 650; color: var(--brique-fonce); }
+.carte__maison svg { width: 24px; height: 24px; }
+
+.filtres { display: none; max-width: 760px; margin: 28px auto 0; }
+.js .filtres { display: block; }
+.filtres__ouvrir {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 16px;
+  font-weight: 650;
+  text-align: left;
+  color: var(--encre);
+  background: transparent;
+  border: 2px solid var(--encre);
+  border-radius: 0;
+  cursor: pointer;
+}
+.filtres__ouvrir:hover { background: rgba(36, 26, 19, .06); }
+.filtres__ouvrir[aria-expanded="true"] { color: var(--papier); background: var(--encre); }
+.filtres__panneau { padding: 16px; background: #ece0c8; border: 2px solid var(--encre); border-top: 0; }
+.filtres__aide { font-size: .98rem; }
+.filtres__puces { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 6px 13px;
+  font-size: .98rem;
+  color: var(--encre);
+  background: var(--papier);
+  border: 1.5px solid var(--encre);
+  border-radius: 0;
+  cursor: pointer;
+}
+.puce .icone { width: 17px; height: 17px; color: #59692a; }
+.puce[aria-pressed="true"] { color: #fff6ea; background: var(--brique); border-color: var(--brique); text-decoration: line-through; text-decoration-thickness: 2px; }
+.puce--vege[aria-pressed="true"] { background: #4f5e22; border-color: #4f5e22; text-decoration: none; }
+.puce--vege[aria-pressed="true"] .icone { color: #e3efb9; }
+.filtres__bilan { margin-top: 12px; font-weight: 700; }
+.filtres__bilan:empty { display: none; }
+.filtres__vider { margin-top: 8px; padding: 0; font-size: .95rem; text-decoration: underline; color: var(--encre); background: none; border: 0; cursor: pointer; }
+.filtres__note { margin-top: 10px; font-size: .85rem; font-style: italic; color: var(--encre-douce); }
+
+.carte__pages { display: grid; gap: 48px; max-width: 1140px; margin: 44px auto 0; }
+.rubrique + .rubrique { margin-top: 52px; }
+.rubrique__titre {
+  font-family: var(--gothique);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 9vw, 2.8rem);
+  line-height: 1;
+  text-align: center;
+  color: var(--brique);
+}
+.rubrique__titre::after {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 14px;
+  margin: 8px auto 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 14'%3E%3Cpath d='M2 7h52M96 7h52' stroke='%23241a13' stroke-width='1.4'/%3E%3Cpath d='M75 1.5 80.5 7 75 12.5 69.5 7Z' fill='%23a63a2b'/%3E%3Ccircle cx='62' cy='7' r='2' fill='%23241a13'/%3E%3Ccircle cx='88' cy='7' r='2' fill='%23241a13'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.rubrique__note { max-width: 34rem; margin: 12px auto 0; font-style: italic; text-align: center; color: var(--encre-douce); text-wrap: pretty; }
+.rubrique__gravure { width: 100%; max-width: 340px; height: auto; margin: 16px auto 0; mix-blend-mode: multiply; }
+
+.plats { display: grid; gap: 20px; margin-top: 22px; }
+.plat { transition: opacity .25s; }
+.plat__ligne { display: flex; align-items: baseline; gap: 8px; }
+.plat__nom { font-weight: 700; font-size: 1.14rem; line-height: 1.3; }
+.plat__points { flex: 1 1 20px; min-width: 16px; border-bottom: 2px dotted rgba(36, 26, 19, .45); transform: translateY(-5px); }
+.plat__prix { flex: none; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; color: var(--brique); white-space: nowrap; }
+.plat__desc { margin-top: 2px; font-style: italic; color: var(--encre-douce); text-wrap: pretty; }
+.plat__allergenes { margin-top: 3px; font-size: .84rem; color: var(--encre-douce); }
+.plat__vege { display: inline-block; width: 18px; height: 18px; margin-left: 7px; vertical-align: -2px; color: #59692a; }
+.plat__voir {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  margin-top: 8px;
+  padding: 5px 11px;
+  font-size: .94rem;
+  color: var(--encre);
+  background: transparent;
+  border: 1.5px solid var(--encre);
+  border-radius: 0;
+  cursor: pointer;
+}
+.plat__voir .icone { width: 18px; height: 18px; }
+.plat__voir:hover { background: rgba(36, 26, 19, .07); }
+.plat__voir[aria-expanded="true"] { color: var(--papier); background: var(--encre); }
+.plat__photo { max-width: 420px; margin-top: 12px; }
+.plat__photo img { width: 100%; height: auto; border: 8px solid #fffdf7; box-shadow: 0 10px 22px rgba(60, 40, 20, .25); transform: rotate(-1deg); }
+.js .plat__photo:not(.est-ouverte) { display: none; }
+.plat__photo.est-ouverte { animation: deplier .35s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes deplier { from { opacity: 0; transform: translateY(-8px); } }
+.plat--ecarte { opacity: .42; }
+.plat--ecarte .plat__nom { text-decoration: line-through; text-decoration-thickness: 2px; }
+.plat__raison { margin-top: 2px; font-size: .9rem; font-weight: 700; color: var(--brique-fonce); }
+
+.boire { max-width: 1140px; margin: 64px auto 0; padding-top: 44px; border-top: 2px solid var(--encre); }
+.boire__tete { max-width: 640px; margin: 0 auto; }
+.bieres { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
+.biere {
+  --r: 0deg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding: 16px 12px;
+  text-align: center;
+  color: var(--c-texte);
+  background: var(--c-fond);
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 7px var(--c-fond), inset 0 0 0 9px currentColor, 0 7px 14px rgba(60, 40, 20, .28);
+  transform: rotate(var(--r));
+}
+.biere--blonde { --c-fond: #efbd4c; --c-texte: #3a230f; --r: -2deg; }
+.biere--ambree { --c-fond: #a63a2b; --c-texte: #fff0da; --r: 1.5deg; }
+.biere--blanche { --c-fond: #f7f2e6; --c-texte: #23395c; --r: 1deg; }
+.biere--noel { --c-fond: #26402f; --c-texte: #f3d690; --r: -1.5deg; }
+.biere__logo { width: 30px; height: 30px; margin-bottom: 8px; }
+.biere__logo--cone { width: 24px; height: 32px; }
+.biere__nom { font-family: var(--gothique); font-weight: 800; font-size: clamp(1.3rem, 5.4vw, 2.1rem); line-height: .98; text-wrap: balance; }
+.biere__style { margin-top: 6px; font-size: .86rem; font-style: italic; line-height: 1.3; }
+.biere__prix { margin-top: 8px; font-size: .84rem; font-weight: 700; line-height: 1.35; }
+
+.boissons { display: grid; gap: 30px; margin-top: 44px; }
+.boissons__photo { max-width: 340px; }
+.boissons__photo img { width: 100%; height: auto; border: 8px solid #fffdf7; box-shadow: 0 12px 26px rgba(60, 40, 20, .28); transform: rotate(-1.5deg); }
+.boissons__titre { font-family: var(--gothique); font-weight: 700; font-size: 1.6rem; line-height: 1; color: var(--brique); }
+.boissons__titre + .liste-prix { margin-top: 8px; }
+.liste-prix + .boissons__titre { margin-top: 26px; }
+.liste-prix li { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; }
+.liste-prix li > span:last-child { flex: none; font-weight: 700; color: var(--brique); }
+.carte__mentions { max-width: 760px; margin: 40px auto 0; font-size: .86rem; text-align: center; color: var(--encre-douce); }
+.carte__fin { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 760px; margin: 44px auto 0; padding-top: 34px; border-top: 1px solid rgba(36, 26, 19, .22); }
+.carte__fin p { width: 100%; font-family: var(--gothique); font-weight: 700; font-size: 2rem; line-height: 1; text-align: center; }
+
+@media (min-width: 900px) {
+  .bieres { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .boissons { grid-template-columns: 300px minmax(0, 1fr); align-items: start; gap: 56px; max-width: 920px; margin-inline: auto; }
+}
+@media (min-width: 1000px) {
+  .carte { padding-bottom: 80px; }
+  .carte__pages { grid-template-columns: 1fr 1fr; gap: 0; }
+  .carte__page { padding: 0 52px; }
+  .carte__page + .carte__page { border-left: 1px solid rgba(36, 26, 19, .25); box-shadow: inset 16px 0 22px -18px rgba(60, 40, 20, .35); }
+}
+
+/* --------------------------------------------------------------------------
+   Les photos : des cadres accrochés au mur de briques
+   -------------------------------------------------------------------------- */
+.mur--galerie { display: block; padding: 46px var(--g) 72px; }
+.galerie__tete { max-width: 760px; margin: 0 auto; text-align: center; color: var(--papier); }
+.page-titre--clair { color: var(--papier); text-shadow: 0 4px 0 rgba(0, 0, 0, .3); }
+.galerie__chapo { margin-top: 14px; font-size: 1.08rem; color: rgba(243, 234, 217, .92); text-wrap: pretty; }
+.galerie { columns: 2; column-gap: 14px; max-width: 1200px; margin: 38px auto 0; }
+.galerie__item { break-inside: avoid; margin-bottom: 16px; }
+.galerie__item:nth-child(3n) .cadre { transform: rotate(.7deg); }
+.galerie__item:nth-child(4n + 1) .cadre { transform: rotate(-.5deg); }
+.galerie__lien { display: block; color: inherit; text-decoration: none; }
+.galerie__lien:hover .cadre, .galerie__lien:focus-visible .cadre { transform: translateY(-3px) rotate(0); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25), 0 24px 36px rgba(0, 0, 0, .5); }
+.galerie .cadre { padding: 6px 6px 7px; border-width: 6px; transition: transform .2s, box-shadow .2s; }
+.galerie .cadre figcaption { margin-top: 6px; font-family: var(--texte); font-style: italic; font-size: .8rem; line-height: 1.35; }
+.cadre--gravure img { mix-blend-mode: multiply; }
+
+.visionneuse { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; color: var(--papier); background: transparent; border: 0; }
+.visionneuse::backdrop { background: rgba(12, 10, 8, .93); }
+.visionneuse[open] { display: grid; place-items: center; }
+.visionneuse__figure { display: grid; justify-items: center; gap: 12px; padding: 70px 14px 90px; }
+.visionneuse__figure img { width: auto; height: auto; max-width: min(1100px, 100%); max-height: calc(100dvh - 210px); border: 8px solid #f4efe4; box-shadow: 0 24px 60px rgba(0, 0, 0, .6); }
+.visionneuse[open] .visionneuse__figure { animation: deplier .3s cubic-bezier(.2, .8, .2, 1) both; }
+.visionneuse figcaption { max-width: 40rem; font-style: italic; text-align: center; }
+.visionneuse__position { position: fixed; top: 22px; left: 18px; font-size: .92rem; opacity: .8; }
+.visionneuse__bouton {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  color: var(--papier);
+  background: rgba(18, 21, 20, .75);
+  border: 2px solid rgba(243, 234, 217, .6);
+  border-radius: 0;
+  cursor: pointer;
+}
+.visionneuse__bouton:hover { background: rgba(243, 234, 217, .15); }
+.visionneuse__bouton--fermer { top: 12px; right: 12px; }
+.visionneuse__bouton--prec { bottom: 18px; left: calc(50% - 64px); }
+.visionneuse__bouton--suiv { bottom: 18px; right: calc(50% - 64px); }
+
+.credits { max-width: 880px; margin: 70px auto 0; padding: 30px 24px; font-size: .95rem; color: var(--encre); background: var(--papier); box-shadow: 0 20px 40px rgba(0, 0, 0, .4); }
+.credits__titre { font-family: var(--gothique); font-weight: 800; font-size: 2.1rem; line-height: 1; color: var(--brique); }
+.credits > p { margin-top: 12px; }
+.credits__liste { display: grid; gap: 10px; margin-top: 16px; }
+.credits a { color: var(--brique-fonce); }
+
+@media (min-width: 700px) {
+  .galerie { columns: 3; column-gap: 24px; }
+  .galerie__item { margin-bottom: 26px; }
+  .galerie .cadre { padding: 10px 10px 9px; border-width: 9px; }
+  .galerie .cadre figcaption { font-family: var(--main); font-style: normal; font-weight: 300; font-size: .82rem; line-height: 1.6; }
+}
+@media (min-width: 1100px) {
+  .mur--galerie { padding: 70px 32px 100px; }
+  .galerie { columns: 4; column-gap: 30px; }
+  .visionneuse__bouton--prec { top: 50%; bottom: auto; left: 24px; transform: translateY(-50%); }
+  .visionneuse__bouton--suiv { top: 50%; bottom: auto; right: 24px; transform: translateY(-50%); }
+}
+
+/* --------------------------------------------------------------------------
+   Venir : les services, l'adresse, le cahier des groupes
+   -------------------------------------------------------------------------- */
+html:not(.js) .js-seul { display: none !important; }
+.venir { padding: 46px var(--g) 76px; color: var(--encre); }
+.venir__tete { max-width: 740px; margin: 0 auto; text-align: center; }
+.venir__chapo { margin-top: 14px; font-size: 1.1rem; text-wrap: pretty; }
+.venir__grille { display: grid; gap: 22px; max-width: 1200px; margin: 40px auto 0; }
+.bloc { padding: 24px 22px 26px; background: rgba(255, 252, 244, .5); border: 2px solid var(--encre); }
+.bloc__titre { margin-bottom: 12px; font-family: var(--gothique); font-weight: 800; font-size: 2rem; line-height: 1; color: var(--brique); }
+.bloc__note { margin-top: 12px; font-size: .9rem; font-style: italic; color: var(--encre-douce); }
+.numero {
+  display: block;
+  margin: 14px 0 8px;
+  font-family: var(--gothique);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 12vw, 3.3rem);
+  line-height: .95;
+  text-decoration: none;
+  color: var(--encre);
+}
+.numero:hover { color: var(--brique); }
+.etat--papier .etat__point { background: var(--brique); box-shadow: 0 0 0 4px rgba(166, 58, 43, .18); }
+.etat--papier.etat--ouvert .etat__point { background: #4c7a32; box-shadow: 0 0 0 4px rgba(76, 122, 50, .2); }
+
+.horaires { width: 100%; border-collapse: collapse; font-variant-numeric: lining-nums tabular-nums; }
+.horaires th, .horaires td { padding: 8px 4px; text-align: left; border-bottom: 1px solid rgba(36, 26, 19, .2); }
+.horaires th { font-weight: 700; }
+@media (max-width: 399px) {
+  .bloc { padding-inline: 16px; }
+  .horaires { font-size: .94rem; }
+}
+@media (min-width: 400px) {
+  .horaires th, .horaires td { padding-inline: 6px; }
+  .horaires td { white-space: nowrap; }
+}
+.horaires__ferme { font-style: italic; color: var(--encre-douce); }
+.horaires tr.aujourdhui { background: rgba(217, 171, 74, .38); }
+.horaires tr.aujourdhui th::after { content: " · aujourd’hui"; font-weight: 400; font-style: italic; font-size: .85em; }
+
+.adresse { font-size: 1.25rem; font-weight: 650; line-height: 1.35; }
+.acces { display: grid; gap: 6px; margin-top: 14px; }
+.acces strong { margin-right: 4px; }
+.adresse__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.plan { aspect-ratio: 4 / 3; margin-top: 16px; border: 2px solid var(--encre); }
+.plan iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+.groupes { display: grid; gap: 28px; max-width: 1200px; margin: 76px auto 0; }
+.page-titre--moyen { font-size: clamp(2.7rem, 13vw, 4.2rem); }
+.groupes__intro p { margin-top: 14px; text-wrap: pretty; }
+.groupes__bon { padding-top: 14px; border-top: 1px solid rgba(36, 26, 19, .25); }
+
+/* Le cahier : lignes bleues, marge rouge, et l'on écrit au stylo bille */
+.cahier {
+  --ligne: 40px;
+  position: relative;
+  padding: 0 18px 28px 50px;
+  background:
+    linear-gradient(90deg, transparent 34px, #d8796b 34px, #d8796b 36px, transparent 36px),
+    repeating-linear-gradient(to bottom, transparent 0 calc(var(--ligne) - 1px), #bfd0e3 calc(var(--ligne) - 1px) var(--ligne)),
+    #fdfaf2;
+  background-position: 0 0, 0 58px;
+  border: 1px solid #d4c7a8;
+  box-shadow: 4px 5px 0 #efe6d2, 8px 10px 0 #e2d6bb, 0 22px 40px rgba(60, 40, 20, .28);
+}
+.cahier__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  height: 58px;
+  margin: 0 -18px 0 -50px;
+  padding: 0 18px 0 50px;
+  font-family: var(--gothique);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--brique);
+  background: #fdfaf2;
+  border-bottom: 2px solid var(--brique);
+}
+.cahier__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 18px; padding-top: 10px; }
+.champ { grid-column: 1 / -1; display: grid; min-width: 0; }
+@media (min-width: 560px) { .champ--demi { grid-column: auto; } }
+.champ label { margin-top: 10px; font-size: .9rem; font-weight: 700; color: var(--encre-douce); }
+.champ__facultatif { font-weight: 400; font-style: italic; }
+.champ input, .champ select, .champ textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 6px 2px;
+  font-family: var(--main);
+  font-weight: 300;
+  font-size: 1.05rem;
+  color: #22407c;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgba(36, 26, 19, .5);
+  border-radius: 0;
+}
+.champ select {
+  appearance: none;
+  padding-right: 30px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6' fill='none' stroke='%23241a13' stroke-width='2.2'/%3E%3C/svg%3E") right 4px center / 18px no-repeat;
+}
+.champ textarea { resize: vertical; line-height: 1.9; }
+.champ input:focus, .champ select:focus, .champ textarea:focus { outline: none; border-bottom-color: var(--brique); background-color: rgba(166, 58, 43, .06); }
+.champ input:focus-visible, .champ select:focus-visible, .champ textarea:focus-visible { box-shadow: 0 3px 0 var(--brique); }
+.cahier__rgpd { grid-column: 1 / -1; margin-top: 14px; font-size: .86rem; font-style: italic; color: var(--encre-douce); }
+.cahier__envoi { grid-column: 1 / -1; display: grid; gap: 10px; margin-top: 12px; }
+.cahier__demo { font-size: .86rem; color: var(--encre-douce); }
+.cahier__sans-js { grid-column: 1 / -1; margin-top: 12px; font-weight: 650; }
+.js .cahier__sans-js { display: none; }
+.cahier__merci { padding-top: 24px; outline: none; }
+.cahier__ecrit { font-family: var(--main); font-weight: 400; font-size: clamp(1.6rem, 7vw, 2.2rem); line-height: 1.6; color: #22407c; }
+.cahier__detail { margin: 8px 0 12px; font-size: 1.08rem; }
+.cahier__merci .bouton { margin-top: 16px; }
+
+@media (min-width: 700px) {
+  .cahier { padding: 0 34px 34px 76px; background-position: 0 0, 0 58px; background-image:
+    linear-gradient(90deg, transparent 52px, #d8796b 52px, #d8796b 54px, transparent 54px),
+    repeating-linear-gradient(to bottom, transparent 0 calc(var(--ligne) - 1px), #bfd0e3 calc(var(--ligne) - 1px) var(--ligne)); }
+  .cahier__entete { margin: 0 -34px 0 -76px; padding: 0 34px 0 76px; font-size: 1.5rem; }
+  .cahier__envoi { grid-template-columns: auto 1fr; align-items: center; gap: 18px; }
+}
+@media (min-width: 1000px) {
+  .venir { padding: 64px 32px 100px; }
+  .venir__grille { grid-template-columns: 1fr 1fr 1.15fr; gap: 28px; align-items: start; }
+  .groupes { grid-template-columns: 380px minmax(0, 1fr); gap: 60px; align-items: start; }
+  .groupes__intro { position: sticky; top: 30px; }
+}
+
+/* --------------------------------------------------------------------------
+   Page introuvable
+   -------------------------------------------------------------------------- */
+.entete--seule { grid-template-columns: 1fr; padding-bottom: 14px; }
+.page-perdue .ardoise { min-height: calc(100dvh - 80px); }
+.perdu { display: grid; gap: 26px; align-items: center; min-height: calc(100dvh - 120px); }
+.perdu__dessin { width: min(100%, 300px); height: auto; filter: invert(1); mix-blend-mode: screen; opacity: .9; }
+.perdu__titre { padding-bottom: .35em; font-family: var(--main); font-weight: 400; font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.5; }
+.perdu__texte > p { margin-top: 12px; color: var(--craie-douce); }
+.perdu__citation { margin-top: 30px !important; font-style: italic; }
+.perdu__citation span { font-size: .85rem; }
+@media (min-width: 900px) {
+  .perdu { grid-template-columns: 340px minmax(0, 1fr); gap: 60px; }
+  .perdu__dessin { width: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   Moins de mouvement
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .js .ardoise__titre, .js .jour__plat, .js .jour__prix, .js .jour__dessert { animation: none; }
+  .sous-bock { transition: none; }
+}
